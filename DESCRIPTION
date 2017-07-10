@@ -1,0 +1,10 @@
+Package: Rbioportal
+Title: R wrapper for NCBO api
+Version: 0.0.0.9000
+Authors@R: person("Gabriel", "Rosenfeld", email = "gabriel.e.rosenfeld@gmail.com", role = c("aut", "cre"))
+Description: Provides a convenient wrapper for accessing the National Center for Biomedical Ontology API services.
+Depends: R (>= 3.3.3)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
