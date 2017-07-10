@@ -22,6 +22,16 @@
 #'
 annotate_it <- function( queryText, apikey = yourAPIkey, ontologies = NULL,
                          expand_mappings = FALSE, longest_only = FALSE) {
+  assertthat::assert_that(assertthat::is.string(queryText))
+  # Error: is.string(queryText) is not TRUE
+  assertthat::assert_that(assertthat::is.string(yourAPIkey))
+  # Error: is.string(yourAPIkey) is not TRUE
+  assertthat::assert_that(assertthat::is.string(ontologies) | is.null(ontologies))
+  # Error: is.string(ontologies) or is.null(ontologies) is not TRUE
+  assertthat::assert_that(assertthat::is.flag(expand_mappings))
+  # Error: is.flag(expand_mappings) is not TRUE
+  assertthat::assert_that(assertthat::is.flag(longest_only))
+  # Error: is.flag(longest_only) is not TRUE
 
   # Login to BioPortal to get apikey
   res<- RCurl::postForm('http://data.bioontology.org/annotator',
@@ -33,6 +43,31 @@ annotate_it <- function( queryText, apikey = yourAPIkey, ontologies = NULL,
                  "expand_mappings"=ifelse(expand_mappings, "true", "false"),
                  "longest_only"=ifelse(longest_only, "true", "false"),
                  "format"="json")
+
+  res <- jsonlite::fromJSON(res)
+  return(res)
+}
+
+#' Get all current NCBO ontologies
+#'
+#' Returns all current NCBO ontologies and their metadata
+#'
+#' @param apikey character - your unique API key (see NCBO account information on NCBO website)
+#'
+#' @return list parsed JSON call from the API
+#'
+#' @examples
+#' o <- get_ontologies()
+#'
+#' @export
+#'
+get_ontologies <- function( apikey = yourAPIkey ) {
+  assertthat::assert_that(assertthat::is.string(yourAPIkey))
+  # Error: is.string(ontologies) or is.null(ontologies) is not TRUE
+
+  # Login to BioPortal to get apikey
+  res<- RCurl::getForm('http://data.bioontology.org/ontologies',
+                        "apikey"=apikey)
 
   res <- jsonlite::fromJSON(res)
   return(res)
@@ -58,6 +93,16 @@ annotate_it <- function( queryText, apikey = yourAPIkey, ontologies = NULL,
 #'
 search_it <- function( queryText, apikey = yourAPIkey, require_exact_match = TRUE,
                        ontologies = NULL, roots_only = FALSE) {
+  assertthat::assert_that(assertthat::is.string(queryText))
+  # Error: is.string(queryText) is not TRUE
+  assertthat::assert_that(assertthat::is.string(yourAPIkey))
+  # Error: is.string(yourAPIkey) is not TRUE
+  assertthat::assert_that(assertthat::is.string(ontologies) | is.null(ontologies))
+  # Error: is.string(ontologies) or is.null(ontologies) is not TRUE
+  assertthat::assert_that(assertthat::is.flag(require_exact_match))
+  # Error: is.flag(require_exact_match) is not TRUE
+  assertthat::assert_that(assertthat::is.flag(roots_only))
+  # Error: is.flag(roots_only) is not TRUE
 
   # Login to BioPortal to get apikey
   res<- RCurl::postForm('http://data.bioontology.org/search',
@@ -86,6 +131,10 @@ search_it <- function( queryText, apikey = yourAPIkey, require_exact_match = TRU
 #' @export
 #'
 recommend_it <- function( queryText, apikey = yourAPIkey) {
+  assertthat::assert_that(assertthat::is.string(queryText))
+  # Error: is.string(queryText) is not TRUE
+  assertthat::assert_that(assertthat::is.string(yourAPIkey))
+  # Error: is.string(yourAPIkey) is not TRUE
 
   # Login to BioPortal to get apikey
   res<- RCurl::postForm('http://data.bioontology.org/recommender',
@@ -110,5 +159,8 @@ recommend_it <- function( queryText, apikey = yourAPIkey) {
 #' @export
 #'
 set_key <- function(yourAPIkey){
+  assertthat::assert_that(assertthat::is.string(yourAPIkey))
+  # Error: is.string(yourAPIkey) is not TRUE
+
   yourAPIkey <<- yourAPIkey
 }
